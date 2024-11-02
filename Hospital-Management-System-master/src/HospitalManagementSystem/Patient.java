@@ -3,10 +3,13 @@ package HospitalManagementSystem;
 import java.sql.*;
 import java.util.Scanner;
 
+
+//Declares the Patient class with a connection for the database and a scanner for taking user input.
 public class Patient {
     private Connection connection;
     private Scanner scanner;
 
+    //Constructor that initializes the database connection and scanner.
     public Patient(Connection connection, Scanner scanner){
         this.connection = connection;
         this.scanner = scanner;

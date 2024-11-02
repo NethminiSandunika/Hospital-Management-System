@@ -3,22 +3,30 @@ package HospitalManagementSystem;
 import java.sql.*;
 import java.util.Scanner;
 
+
+//main controller for your application.
 public class HospitalManagementSystem {
     private static final String url = "jdbc:mysql://localhost:3306/hospital";
     private static final String username = "root";
     private static final String password = "";
 
+    //The main method
     public static void main(String[] args) {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
         }catch (ClassNotFoundException e){
             e.printStackTrace();
         }
+
+        //Creates a Scanner object to read input from the user
         Scanner scanner = new Scanner(System.in);
+ // Establishes a database connection using the URL, username, and password
         try{
             Connection connection = DriverManager.getConnection(url, username, password);
             Patient patient = new Patient(connection, scanner);
             Doctor doctor = new Doctor(connection);
+
+            //Displays a menu
             while(true){
                 System.out.println("HOSPITAL MANAGEMENT SYSTEM ");
                 System.out.println("1. Add Patient");
@@ -65,16 +73,21 @@ public class HospitalManagementSystem {
         }
     }
 
-
+// Static method to handle booking an appointment
     public static void bookAppointment(Patient patient, Doctor doctor, Connection connection, Scanner scanner){
+
         System.out.print("Enter Patient Id: ");
         int patientId = scanner.nextInt();
         System.out.print("Enter Doctor Id: ");
         int doctorId = scanner.nextInt();
         System.out.print("Enter appointment date (YYYY-MM-DD): ");
         String appointmentDate = scanner.next();
+
+        //Checks if the entered patient ID and doctor ID exist
         if(patient.getPatientById(patientId) && doctor.getDoctorById(doctorId)){
             if(checkDoctorAvailability(doctorId, appointmentDate, connection)){
+
+                //Inserts the appointment details into the database
                 String appointmentQuery = "INSERT INTO appointments(patient_id, doctor_id, appointment_date) VALUES(?, ?, ?)";
                 try {
                     PreparedStatement preparedStatement = connection.prepareStatement(appointmentQuery);
@@ -90,6 +103,8 @@ public class HospitalManagementSystem {
                 }catch (SQLException e){
                     e.printStackTrace();
                 }
+
+// Handles cases where either the doctor or patient doesn't exist
             }else{
                 System.out.println("Doctor not available on this date!!");
             }
@@ -98,6 +113,8 @@ public class HospitalManagementSystem {
         }
     }
 
+
+    //Checks if a doctor is available,If count is zero, the doctor is available; otherwise, they are not.
     public static boolean checkDoctorAvailability(int doctorId, String appointmentDate, Connection connection){
         String query = "SELECT COUNT(*) FROM appointments WHERE doctor_id = ? AND appointment_date = ?";
         try{

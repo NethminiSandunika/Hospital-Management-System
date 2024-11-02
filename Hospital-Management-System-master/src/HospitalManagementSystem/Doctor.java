@@ -1,10 +1,10 @@
 package HospitalManagementSystem;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
+import java.sql.Connection;  // for SQL database connection
+import java.sql.PreparedStatement; //for preparing and executing SQL statements
+import java.sql.ResultSet; //to read the data from the database
+import java.sql.SQLException; // for handling SQL exceptions
+import java.util.Scanner; //for any user input
 
 public class Doctor {
     private Connection connection;
@@ -13,6 +13,7 @@ public class Doctor {
         this.connection = connection;
     }
 
+    //method to retrieve and display all doctors from the doctors table.
     public void viewDoctors(){
         String query = "select * from doctors";
         try{
@@ -35,6 +36,8 @@ public class Doctor {
         }
     }
 
+
+    //This method retrieves a specific doctor’s record based on an ID
     public boolean getDoctorById(int id){
         String query = "SELECT * FROM doctors WHERE id = ?";
         try{
