@@ -8,5 +8,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql-connector-j-9.1.0" level="project" />
+    <orderEntry type="library" name="junit-jupiter-api" level="project" />
+    <orderEntry type="library" name="junit-jupiter-engine" level="project" />
+    <orderEntry type="library" name="byte-buddy-1.15.0" level="project" />
+    <orderEntry type="library" name="mysql-connector-j-9.1.01" level="project" />
   </component>
 </module>
